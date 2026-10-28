@@ -1,17 +1,75 @@
 
 {% extends "base.html" %}
 
-{% block title %}Мій профіль{% endblock %}
-
 {% block content %}
-<div class="profile-card">
-    <h1>Вітаємо, {{ username }}!</h1>
-    <p>Ви успішно увійшли в систему.</p>
+<h1>Ласкаво просимо до сторінки профілю, {{ username }}!</h1>
 
-    <form method="POST" action="{{ url_for('logout') }}">
-        <button type="submit" class="danger-button">
-            Вийти
-        </button>
-    </form>
+<p>Тут ви можете керувати cookie свого браузера.</p>
+
+<form action="{{ url_for('logout') }}" method="POST">
+    <button type="submit">Вийти</button>
+</form>
+
+<hr>
+
+<h2>Додати cookie</h2>
+<form action="{{ url_for('add_cookie') }}" method="POST">
+    <label for="key">Ключ cookie:</label>
+    <input type="text" id="key" name="key" required>
+
+    <label for="value">Значення cookie:</label>
+    <input type="text" id="value" name="value" required>
+
+    <label for="max_age">Термін дії (сек):</label>
+    <input type="number" id="max_age" name="max_age"
+           min="0" required>
+
+    <button type="submit">Додати cookie</button>
+</form>
+
+<hr>
+
+<h2>Видалити cookie за ключем</h2>
+<form action="{{ url_for('delete_cookie') }}" method="POST">
+    <label for="delete_key">Ключ cookie для видалення:</label>
+    <input type="text" id="delete_key" name="key" required>
+
+    <button type="submit">Видалити cookie за ключем</button>
+</form>
+
+<hr>
+
+<h2>Видалити всі cookie</h2>
+<form action="{{ url_for('delete_all_cookies') }}" method="POST">
+    <button type="submit">Видалити всі cookie</button>
+</form>
+
+<hr>
+
+
+<h2>Список усіх cookie</h2>
+
+{% if cookies %}
+<div class="cookie-table-wrapper">
+    <table class="cookie-table">
+        <thead>
+            <tr>
+                <th>Ключ</th>
+                <th>Значення</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in cookies.items() %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
+{% else %}
+<p>Cookie не знайдено.</p>
+{% endif %}
+
 {% endblock %}

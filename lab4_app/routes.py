@@ -7,6 +7,7 @@ from flask import (
     url_for,
     session,
     flash,
+    make_response,
 )
 from lab4_app import app
 
@@ -55,6 +56,7 @@ def login():
     return render_template("login.html")
 
 
+
 @app.route("/profile")
 def profile():
     if "username" not in session:
@@ -64,8 +66,88 @@ def profile():
     return render_template(
         "profile.html",
         username=session["username"],
+        cookies=request.cookies
     )
 
+
+@app.route("/add_cookie", methods=["POST"])
+def add_cookie():
+    if "username" not in session:
+        flash("Спочатку увійдіть у систему.", "warning")
+        return redirect(url_for("login"))
+
+    key = request.form.get("key", "").strip()
+    value = request.form.get("value", "")
+    max_age = request.form.get("max_age", "").strip()
+
+    if not key or not max_age:
+        flash("Заповніть ключ cookie та термін дії.", "danger")
+        return redirect(url_for("profile"))
+
+    try:
+        max_age = int(max_age)
+        if max_age < 0:
+            raise ValueError
+    except ValueError:
+        flash("Термін дії має бути невід'ємним цілим числом.", "danger")
+        return redirect(url_for("profile"))
+
+    response = make_response(redirect(url_for("profile")))
+    response.set_cookie(key, value, max_age=max_age)
+
+    flash(f"Cookie «{key}» успішно додано.", "success")
+    return response
+
+
+
+@app.route("/delete_cookie", methods=["POST"])
+def delete_cookie():
+    if "username" not in session:
+        flash("Спочатку увійдіть у систему.", "warning")
+        return redirect(url_for("login"))
+
+    key = request.form.get("key", "").strip()
+
+    if not key:
+        flash("Введіть ключ cookie для видалення.", "danger")
+        return redirect(url_for("profile"))
+
+    if key not in request.cookies:
+        flash(f"Cookie «{key}» не знайдено.", "danger")
+        return redirect(url_for("profile"))
+
+    response = make_response(redirect(url_for("profile")))
+    response.delete_cookie(key)
+
+    flash(f"Cookie «{key}» успішно видалено.", "success")
+    return response
+
+
+
+
+@app.route("/delete_all_cookies", methods=["POST"])
+def delete_all_cookies():
+    if "username" not in session:
+        flash("Спочатку увійдіть у систему.", "warning")
+        return redirect(url_for("login"))
+
+    # Не враховуємо cookie сесії Flask
+    cookies_to_delete = [
+        key for key in request.cookies.keys()
+        if key != app.config.get("SESSION_COOKIE_NAME", "session")
+    ]
+
+    if not cookies_to_delete:
+        flash("Немає користувацьких cookie для видалення.", "warning")
+        return redirect(url_for("profile"))
+
+    response = make_response(redirect(url_for("profile")))
+
+    for key in cookies_to_delete:
+        response.delete_cookie(key)
+
+    flash("Запит на видалення користувацьких cookie надіслано.", "success")
+    return response
 
 @app.route("/logout", methods=["POST"])
 def logout():

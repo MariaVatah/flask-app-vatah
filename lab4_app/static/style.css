@@ -95,3 +95,33 @@ button {
     color: #64748b;
     font-size: 14px;
 }
+
+
+.cookie-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.cookie-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-top: 15px;
+}
+
+.cookie-table th,
+.cookie-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.cookie-table th {
+    background-color: #e8edf5;
+}
+
+.cookie-table tbody tr:nth-child(even) {
+    background-color: #f0f2f5;
+}
