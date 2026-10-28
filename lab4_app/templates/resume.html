@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="resume-layout">
+<link rel="stylesheet" href="{{ url_for('static', filename='resume.css') }}">
+<aside class="profile-rail">
+    <div class="portrait-frame">
+      <img src="{{ url_for('static', filename='images/IMG_5327.JPG') }}" alt="Ілюстрація профілю">
+      <span class="portrait-index">FIG. 01</span>
+    </div>
+    <p class="eyebrow rail-label">ЗАРАЗ ВИВЧАЮ</p>
+    <div class="learning-chip"><span class="status-dot"></span> Flask та веброзробку</div>
+    <div class="rail-meta">
+      <span class="mono">ЛОКАЦІЯ</span>
+      <span>{{ profile.location }}</span>
+    </div>
+    <div class="rail-meta">
+      <span class="mono">ЕЛЕКТРОННА ПОШТА</span>
+      <a href="mailto:{{ profile.email }}">{{ profile.email }}</a>
+    </div>
+    <a class="round-link" href="{{ url_for('contacts') }}">Написати мені <span>↗</span></a>
+  </aside>
+
+  <div class="resume-main">
+    <section class="hero-section" id="about">
+      <p class="eyebrow"><span class="status-dot"></span> ВІДКРИТА ДО МОЖЛИВОСТЕЙ</p>
+      <h1>Привіт, я<br><span class="headline-accent">{{ profile.name.split(' ')[0] }}.</span></h1>
+      <p class="hero-role">{{ profile.role }} <span class="slash">/</span> розробка з цікавістю</p>
+      <p class="intro-copy">{{ profile.about }}</p>
+      <div class="hero-stamp"><span>BUILD</span><span>LEARN</span><span>REPEAT ↻</span></div>
+    </section>
+
+    <section class="content-section" id="education">
+      <div class="section-heading"><span class="section-number">01</span><h2>Освіта</h2><span class="heading-rule"></span></div>
+      {% for item in profile.education %}
+      <article class="timeline-item">
+        <p class="mono muted">{{ item.period }}</p>
+        <div><h3>{{ item.title }}</h3><p class="item-subtitle">{{ item.place }}</p><p class="body-copy">{{ item.detail }}</p></div>
+      </article>
+      {% endfor %}
+    </section>
+
+    <section class="content-section" id="skills">
+      <div class="section-heading"><span class="section-number">02</span><h2>Навички</h2><span class="heading-rule"></span></div>
+      <div class="skill-grid">
+        {% for skill in profile.skills %}<div class="skill-card"><span class="skill-plus">＋</span>{{ skill }}</div>{% endfor %}
+      </div>
+    </section>
+
+    <section class="content-section" id="technology">
+      <div class="section-heading"><span class="section-number">03</span><h2>Технології</h2><span class="heading-rule"></span></div>
+      <div class="tech-list">
+        {% for tech in profile.technologies %}<span class="tech-tag">{{ tech }}</span>{% endfor %}
+      </div>
+    </section>
+
+    <section class="content-section" id="projects">
+      <div class="section-heading"><span class="section-number">04</span><h2>Проєкти</h2><span class="heading-rule"></span></div>
+      <div class="project-list">
+        {% for project in profile.projects %}
+        <article class="project-card">
+          <div class="project-top"><span class="mono project-kind">{{ project.kind }}</span><span class="project-arrow">↗</span></div>
+          <h3>{{ project.name }}</h3><p class="body-copy">{{ project.detail }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    <div class="closing-note"><span class="mint">✳</span> Далі — більше практики, коду й цікавих задач.</div>
+  </div>
+</div>
+{% endblock %}

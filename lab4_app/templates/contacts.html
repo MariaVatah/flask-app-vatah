@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="contact-page">
+  <link rel="stylesheet" href="{{ url_for('static', filename='resume.css') }}">
+  <p class="eyebrow"><span class="status-dot"></span> ЗВ’ЯЖІМОСЯ</p>
+  <div class="contact-heading-row">
+    <h1>Є ідея?<br><span class="headline-accent">Обговорімо.</span></h1>
+    <div class="contact-number mono">02 — CONTACT</div>
+  </div>
+  <p class="contact-lead">Маєте запитання, пропозицію або просто хочете поспілкуватися про технології? Напишіть повідомлення.</p>
+  <div class="contact-grid">
+    <div class="contact-details">
+      <div class="contact-detail"><span class="mono">EMAIL</span><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></div>
+      <div class="contact-detail"><span class="mono">ЛОКАЦІЯ</span><span>{{ profile.location }}</span></div>
+      <div class="contact-detail"><span class="mono">СТАТУС</span><span><span class="status-dot"></span> Відкрита до знайомств</span></div>
+      <div class="contact-decoration">LET’S<br><span>MAKE</span><br>IT WORK<span class="mint">.</span></div>
+    </div>
+    <div class="form-panel">
+      {% if submitted %}
+      <div class="form-success" role="status">
+        <span class="success-icon">✓</span>
+        <h2>Форму перевірено!</h2>
+        <p>Це навчальна заглушка: повідомлення не надсилалося й не зберігалося.</p>
+        <a class="text-link" href="{{ url_for('contacts') }}">Заповнити ще раз ↗</a>
+      </div>
+      {% else %}
+      <form method="post" action="{{ url_for('contacts') }}">
+        <div class="form-intro"><span class="mono">01 / ФОРМА ПОВІДОМЛЕННЯ</span><span class="required-note">* обов’язкові поля</span></div>
+        <label for="name" class="form-label-custom">Ваше ім’я <span>*</span></label>
+        <input class="form-control custom-input" id="name" name="name" type="text" placeholder="Як до вас звертатися?" required>
+        <label for="email" class="form-label-custom">Електронна пошта <span>*</span></label>
+        <input class="form-control custom-input" id="email" name="email" type="email" placeholder="you@example.com" required>
+        <label for="subject" class="form-label-custom">Тема</label>
+        <input class="form-control custom-input" id="subject" name="subject" type="text" placeholder="Про що поговоримо?">
+        <label for="message" class="form-label-custom">Повідомлення <span>*</span></label>
+        <textarea class="form-control custom-input" id="message" name="message" rows="4" placeholder="Напишіть кілька слів..." required></textarea>
+        <button class="submit-button" type="submit">Надіслати повідомлення <span>↗</span></button>
+        <p class="form-footnote">Демонстраційна форма · без реального надсилання</p>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

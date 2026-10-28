@@ -1,0 +1,97 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f5f9;
+    color: #202938;
+}
+
+nav {
+    display: flex;
+    gap: 24px;
+    padding: 18px 8%;
+    background: #243b55;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.login-card,
+.profile-card {
+    padding: 28px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px #00000012;
+}
+
+label {
+    display: block;
+    margin-top: 16px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 11px 20px;
+    border: 0;
+    border-radius: 6px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+}
+
+.danger-button {
+    background: #dc2626;
+}
+
+.flash {
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    border-radius: 6px;
+}
+
+.success {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.danger {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.info {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.hint {
+    margin-top: 20px;
+    color: #64748b;
+    font-size: 14px;
+}
