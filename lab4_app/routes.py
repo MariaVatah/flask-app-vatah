@@ -60,20 +60,36 @@ def login():
 @app.route("/profile")
 def profile():
     if "username" not in session:
-        flash("Спочатку увійдіть у систему.", "warning")
+        flash("Спочатку увійдіть у систему.", "danger")
         return redirect(url_for("login"))
 
     return render_template(
         "profile.html",
         username=session["username"],
-        cookies=request.cookies
+        cookies=request.cookies,
+        theme=session.get("theme", "light")
     )
+
+
+@app.route("/set_theme/<theme>", methods=["POST"])
+def set_theme(theme):
+    if "username" not in session:
+        flash("Спочатку увійдіть у систему.", "danger")
+        return redirect(url_for("login"))
+
+    if theme not in ("light", "dark"):
+        flash("Невідома кольорова схема.", "danger")
+        return redirect(url_for("profile"))
+
+    session["theme"] = theme
+    flash("Кольорову схему змінено.", "success")
+    return redirect(url_for("profile"))
 
 
 @app.route("/add_cookie", methods=["POST"])
 def add_cookie():
     if "username" not in session:
-        flash("Спочатку увійдіть у систему.", "warning")
+        flash("Спочатку увійдіть у систему.", "danger")
         return redirect(url_for("login"))
 
     key = request.form.get("key", "").strip()
@@ -103,7 +119,7 @@ def add_cookie():
 @app.route("/delete_cookie", methods=["POST"])
 def delete_cookie():
     if "username" not in session:
-        flash("Спочатку увійдіть у систему.", "warning")
+        flash("Спочатку увійдіть у систему.", "danger")
         return redirect(url_for("login"))
 
     key = request.form.get("key", "").strip()
@@ -123,15 +139,12 @@ def delete_cookie():
     return response
 
 
-
-
 @app.route("/delete_all_cookies", methods=["POST"])
 def delete_all_cookies():
     if "username" not in session:
-        flash("Спочатку увійдіть у систему.", "warning")
+        flash("Спочатку увійдіть у систему.", "danger")
         return redirect(url_for("login"))
 
-    # Не враховуємо cookie сесії Flask
     cookies_to_delete = [
         key for key in request.cookies.keys()
         if key != app.config.get("SESSION_COOKIE_NAME", "session")

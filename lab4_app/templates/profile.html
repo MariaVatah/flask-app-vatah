@@ -2,7 +2,40 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="profile-page {{ theme }}-theme">
 <h1>Ласкаво просимо до сторінки профілю, {{ username }}!</h1>
+
+<section class="theme-settings">
+    <h2>Кольорова схема</h2>
+
+    <p>Поточна тема:
+        <strong>
+            {% if theme == "dark" %}
+                Темна
+            {% else %}
+                Світла
+            {% endif %}
+        </strong>
+    </p>
+
+    <div class="theme-buttons">
+        <form action="{{ url_for('set_theme', theme='light') }}"
+              method="POST">
+            <button type="submit"
+                    class="theme-button light-button">
+                Світла тема
+            </button>
+        </form>
+
+        <form action="{{ url_for('set_theme', theme='dark') }}"
+              method="POST">
+            <button type="submit"
+                    class="theme-button dark-button">
+                Темна тема
+            </button>
+        </form>
+    </div>
+</section>
 
 <p>Тут ви можете керувати cookie свого браузера.</p>
 
@@ -71,5 +104,5 @@
 {% else %}
 <p>Cookie не знайдено.</p>
 {% endif %}
-
+</div>
 {% endblock %}

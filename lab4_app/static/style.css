@@ -125,3 +125,78 @@ button {
 .cookie-table tbody tr:nth-child(even) {
     background-color: #f0f2f5;
 }
+
+.profile-page {
+    padding: 20px;
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.profile-page.light-theme {
+    background-color: #f1f5f9;
+    color: #1e293b;
+}
+
+.profile-page.dark-theme {
+    background-color: #1e293b;
+    color: #f1f5f9;
+}
+
+.profile-page.dark-theme h1,
+.profile-page.dark-theme h2,
+.profile-page.dark-theme p,
+.profile-page.dark-theme label {
+    color: #f1f5f9;
+}
+
+.theme-settings {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #94a3b8;
+    border-radius: 8px;
+}
+
+.theme-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.theme-button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.light-button {
+    background-color: #e2e8f0;
+    color: #1e293b;
+}
+
+.dark-button {
+    background-color: #334155;
+    color: #ffffff;
+}
+
+.profile-page.dark-theme table {
+    color: #f1f5f9;
+    border-color: #64748b;
+}
+
+.profile-page.dark-theme th {
+    background-color: #334155;
+    color: #ffffff;
+}
+
+.profile-page.dark-theme td {
+    background-color: #273449;
+    color: #f1f5f9;
+    border-color: #64748b;
+}
+
+.profile-page.dark-theme input {
+    background-color: #334155;
+    color: #ffffff;
+    border-color: #64748b;
+}
