@@ -48,6 +48,28 @@
         </a>
 
       {% endif %}
+      
+      <div class="nav-theme-switcher">
+        <form method="POST" action="{{ url_for('users.change_theme') }}">
+          <input type="hidden" name="theme" value="light">
+          <button type="submit"
+                  class="nav-theme-button {% if request.cookies.get('theme') == 'light' %}active{% endif %}"
+                  aria-label="Увімкнути світлу тему"
+                  title="Світла тема">
+            ☀
+          </button>
+        </form>
+
+        <form method="POST" action="{{ url_for('users.change_theme') }}">
+          <input type="hidden" name="theme" value="dark">
+          <button type="submit"
+                  class="nav-theme-button {% if request.cookies.get('theme', 'dark') == 'dark' %}active{% endif %}"
+                  aria-label="Увімкнути темну тему"
+                  title="Темна тема">
+            ☾
+          </button>
+        </form>
+      </div>
 
     </div>
   </nav>

@@ -64,8 +64,46 @@ def profile():
     return render_template(
         "users/profile.html",
         username=session["username"],
-        cookies=request.cookies
+        cookies=request.cookies,
+        theme=request.cookies.get("theme", "dark")
     )
+
+
+@users_bp.route("/theme", methods=["POST"])
+def change_theme():
+    theme = request.form.get("theme", "dark")
+
+    if theme not in ("dark", "light"):
+        flash("Невідома кольорова схема.", "danger")
+        return redirect(request.referrer or url_for("resume"))
+
+    response = make_response(
+        redirect(request.referrer or url_for("resume"))
+    )
+
+    response.set_cookie(
+        "theme",
+        theme,
+        max_age=365 * 24 * 60 * 60,
+        httponly=True,
+        samesite="Lax"
+    )
+
+    flash("Кольорову схему успішно змінено!", "success")
+
+    return response
+
+    response.set_cookie(
+        "theme",
+        theme,
+        max_age=365 * 24 * 60 * 60,
+        httponly=True,
+        samesite="Lax"
+    )
+
+    flash("Кольорову схему успішно змінено!", "success")
+
+    return response
 
 
 @users_bp.route("/cookies/add", methods=["POST"])
