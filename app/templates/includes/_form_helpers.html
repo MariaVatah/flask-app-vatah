@@ -1,0 +1,26 @@
+{% macro render_field(field, class_name="form-control custom-input", placeholder="", rows=None) %}
+<div class="form-field">
+    {{ field.label(class="form-label-custom") }}
+
+    {% if rows %}
+        {{ field(
+            class=class_name,
+            placeholder=placeholder,
+            rows=rows
+        ) }}
+    {% else %}
+        {{ field(
+            class=class_name,
+            placeholder=placeholder
+        ) }}
+    {% endif %}
+
+    {% if field.errors %}
+        <div class="field-errors">
+            {% for error in field.errors %}
+                <span class="field-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endmacro %}

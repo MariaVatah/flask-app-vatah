@@ -1,7 +1,24 @@
+import logging
+import os
 
-from flask import render_template, request
+from flask import render_template, flash, redirect, url_for
 from . import app
+from .forms import ContactForm
 
+CONTACT_LOG = os.path.join(app.root_path, "contacts.log")
+
+contact_logger = logging.getLogger("contact_form")
+contact_logger.setLevel(logging.INFO)
+
+if not contact_logger.handlers:
+    file_handler = logging.FileHandler(
+        CONTACT_LOG,
+        encoding="utf-8"
+    )
+    file_handler.setFormatter(
+        logging.Formatter("%(asctime)s - %(message)s")
+    )
+    contact_logger.addHandler(file_handler)
 
 PROFILE = {
     "name": "Марія Ватах",
@@ -64,14 +81,35 @@ def resume():
 
 @app.route("/contacts", methods=["GET", "POST"])
 def contacts():
-    submitted = False
+    form = ContactForm()
 
-    if request.method == "POST":
-        submitted = True
+    if form.validate_on_submit():
+        contact_logger.info(
+            "Нове повідомлення | Ім'я: %s | Email: %s | "
+            "Телефон: %s | Тема: %s | Повідомлення: %s",
+            form.name.data,
+            form.email.data,
+            form.phone.data,
+            form.subject.data,
+            form.message.data
+        )
+
+        flash(
+            "Повідомлення успішно оброблено!",
+            "success"
+        )
+
+        return redirect(url_for("contacts"))
+
+    if form.is_submitted():
+        flash(
+            "Не вдалося обробити форму. Перевірте правильність заповнення полів.",
+            "error"
+        )
 
     return render_template(
         "contacts.html",
         title="Контакти",
         profile=PROFILE,
-        submitted=submitted
+        form=form
     )
