@@ -5,7 +5,8 @@ from flask import (
     url_for,
     flash,
     session,
-    make_response
+    make_response,
+    current_app
 )
 
 from app.users import users_bp
@@ -93,19 +94,6 @@ def change_theme():
 
     return response
 
-    response.set_cookie(
-        "theme",
-        theme,
-        max_age=365 * 24 * 60 * 60,
-        httponly=True,
-        samesite="Lax"
-    )
-
-    flash("Кольорову схему успішно змінено!", "success")
-
-    return response
-
-
 @users_bp.route("/cookies/add", methods=["POST"])
 def add_cookie():
     if "username" not in session:
@@ -116,13 +104,16 @@ def add_cookie():
     value = request.form.get("value", "")
     days = request.form.get("days", type=int)
 
-    session_cookie = users_bp.name
-
     if not key or days is None or days <= 0:
         flash("Вкажіть ключ і коректний термін дії cookie.", "danger")
         return redirect(url_for("users.profile"))
 
-    if key.lower() == "session":
+    session_cookie_name = current_app.config.get(
+        "SESSION_COOKIE_NAME",
+        "session"
+)
+
+    if key == session_cookie_name:
         flash("Це зарезервований ключ сесії. Виберіть інший.", "danger")
         return redirect(url_for("users.profile"))
 
@@ -151,6 +142,15 @@ def delete_cookie():
         flash("Вкажіть ключ cookie для видалення.", "danger")
         return redirect(url_for("users.profile"))
 
+    session_cookie_name = current_app.config.get(
+        "SESSION_COOKIE_NAME",
+        "session"
+    )
+
+    if key == session_cookie_name:
+        flash("Не можна видалити Cookie авторизації.", "danger")
+        return redirect(url_for("users.profile"))
+
     if key not in request.cookies:
         flash(f"Cookie «{key}» не знайдено.", "warning")
         return redirect(url_for("users.profile"))
@@ -169,7 +169,10 @@ def delete_all_cookies():
         return redirect(url_for("users.login"))
 
     response = make_response(redirect(url_for("users.profile")))
-    session_cookie_name = "session"
+    session_cookie_name = current_app.config.get(
+        "SESSION_COOKIE_NAME",
+        "session"
+    )
 
     deleted_count = 0
 
