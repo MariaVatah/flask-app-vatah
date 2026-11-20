@@ -42,7 +42,16 @@ PROFILE = {
 }
 
 
+
 @app.route("/")
+def homepage():
+    return render_template(
+        "homepage.html",
+        title="Головна",
+        profile=PROFILE
+    )
+
+
 @app.route("/resume")
 def resume():
     return render_template(
@@ -50,6 +59,7 @@ def resume():
         title="Резюме",
         profile=PROFILE
     )
+
 
 
 @app.route("/contacts", methods=["GET", "POST"])
