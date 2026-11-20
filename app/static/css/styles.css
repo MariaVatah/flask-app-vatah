@@ -185,3 +185,299 @@ h1 { margin: 25px 0 12px; font-size: clamp(46px, 6vw, 76px); font-weight: 800; l
 .page-content p:last-child {
     color: #198754;
 }
+
+.nav-logout {
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+}
+
+
+/* =====================================
+   AUTHENTICATION - LOGIN
+===================================== */
+
+.auth-page,
+.profile-page {
+    max-width: 1020px;
+    margin: 0 auto;
+}
+
+.auth-heading {
+    max-width: 650px;
+    margin-bottom: 48px;
+}
+
+.auth-heading h1 {
+    margin-top: 24px;
+}
+
+.auth-grid {
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: clamp(30px, 7vw, 90px);
+    align-items: stretch;
+}
+
+.auth-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.auth-decoration {
+    margin: 40px 0 25px;
+    font-size: clamp(48px, 7vw, 76px);
+    font-weight: 800;
+    line-height: .9;
+    letter-spacing: -.07em;
+    color: #657168;
+}
+
+.auth-decoration span:first-child {
+    color: var(--mint);
+}
+
+.auth-note {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 25px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.auth-panel {
+    padding: clamp(22px, 4vw, 38px);
+    border: 1px solid var(--line);
+    background: var(--panel);
+}
+
+.auth-panel .form-control {
+    width: 100%;
+}
+
+.auth-panel .custom-input {
+    margin-bottom: 8px;
+}
+
+.auth-panel .submit-button {
+    cursor: pointer;
+    font-family: var(--sans);
+}
+
+.auth-panel .submit-button:hover {
+    background: #d0ff9a;
+}
+
+/* =====================================
+   PROFILE
+===================================== */
+
+.profile-heading {
+    margin-bottom: 40px;
+}
+
+.profile-heading-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.profile-heading h1 {
+    margin-top: 24px;
+}
+
+.profile-number {
+    color: var(--muted);
+    padding-bottom: 12px;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 16px;
+}
+
+.profile-main-panel,
+.profile-side-panel {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    padding: clamp(22px, 4vw, 35px);
+}
+
+.profile-avatar {
+    display: grid;
+    place-items: center;
+    width: 76px;
+    height: 76px;
+    margin-bottom: 30px;
+    background: var(--mint);
+    color: var(--bg);
+    font-size: 35px;
+    font-weight: 800;
+    border-radius: 20px 20px 20px 4px;
+}
+
+.profile-main-panel h2 {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 12px 0;
+    letter-spacing: -.05em;
+}
+
+.profile-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin: 8px 0 22px;
+    padding: 7px 11px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.profile-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 17px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13px;
+}
+
+.logout-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 28px;
+    padding: 14px 16px;
+    border: 1px solid #8b514c;
+    background: transparent;
+    color: #e69b91;
+    font: 600 12px var(--sans);
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.logout-button:hover {
+    background: #8b514c22;
+    border-color: #e69b91;
+}
+
+.logout-button span {
+    font-size: 18px;
+}
+
+.profile-side-panel .section-heading {
+    margin-bottom: 10px;
+}
+
+/* =====================================
+   FLASH MESSAGES
+===================================== */
+
+.flash-messages {
+    max-width: 1020px;
+    margin: 0 auto 28px;
+    display: grid;
+    gap: 10px;
+}
+
+.flash-message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 18px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--text);
+    font-size: 12px;
+}
+
+.flash-indicator {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
+    border-radius: 50%;
+}
+
+.flash-success {
+    border-color: #536d43;
+}
+
+.flash-success .flash-indicator {
+    background: var(--mint);
+    box-shadow: 0 0 10px #b8f36b66;
+}
+
+.flash-danger {
+    border-color: #80504b;
+}
+
+.flash-danger .flash-indicator {
+    background: #e69b91;
+}
+
+.flash-warning {
+    border-color: #827047;
+}
+
+.flash-warning .flash-indicator {
+    background: #e7c46b;
+}
+
+.flash-info {
+    border-color: #526b78;
+}
+
+.flash-info .flash-indicator {
+    background: #8ec8df;
+}
+
+.flash-message .btn-close {
+    margin-left: auto;
+    filter: invert(1);
+    opacity: .55;
+}
+
+.flash-message .btn-close:hover {
+    opacity: 1;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 767px) {
+    .auth-grid,
+    .profile-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .auth-info {
+        min-height: auto;
+    }
+
+    .auth-decoration {
+        margin: 25px 0 15px;
+    }
+
+    .profile-heading-row {
+        display: block;
+    }
+
+    .profile-number {
+        padding: 0;
+    }
+
+    .flash-messages {
+        margin-bottom: 20px;
+    }
+}

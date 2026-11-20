@@ -1,0 +1,95 @@
+
+{% extends "base.html" %}
+
+{% block title %}Мій профіль | Портфоліо{% endblock %}
+
+{% block content %}
+
+<section class="profile-page">
+
+    <div class="profile-heading">
+        <p class="eyebrow">
+            <span class="status-dot"></span>
+            ОСОБИСТИЙ ПРОСТІР · PROFILE
+        </p>
+
+        <div class="profile-heading-row">
+            <h1>
+                Вітаю,<br>
+                <span class="headline-accent">{{ username }}.</span>
+            </h1>
+
+            <span class="mono profile-number">01 — PROFILE</span>
+        </div>
+
+        <p class="intro-copy">
+            Ви успішно увійшли в систему.
+            Тут знаходиться ваш особистий простір.
+        </p>
+    </div>
+
+    <div class="profile-grid">
+
+        <div class="profile-main-panel">
+
+            <div class="profile-avatar">
+                {{ username[0]|upper }}
+            </div>
+
+            <p class="eyebrow">АКТИВНИЙ КОРИСТУВАЧ</p>
+
+            <h2>{{ username }}</h2>
+
+            <div class="profile-status">
+                <span class="status-dot"></span>
+                Авторизовано
+            </div>
+
+            <p class="body-copy">
+                Ваша сесія активна. Ви можете користуватися
+                функціями особистого профілю.
+            </p>
+
+        </div>
+
+        <div class="profile-side-panel">
+
+            <div class="section-heading">
+                <span class="section-number">01</span>
+                <h2>Обліковий запис</h2>
+                <span class="heading-rule"></span>
+            </div>
+
+            <div class="profile-detail">
+                <span class="mono muted">USERNAME</span>
+                <span>{{ username }}</span>
+            </div>
+
+            <div class="profile-detail">
+                <span class="mono muted">SESSION STATUS</span>
+                <span class="mint">ACTIVE</span>
+            </div>
+
+            <div class="profile-detail">
+                <span class="mono muted">ACCESS</span>
+                <span>Authorized user</span>
+            </div>
+
+            <form method="POST" action="{{ url_for('users.logout') }}">
+                <button type="submit" class="logout-button">
+                    Вийти з облікового запису
+                    <span>↗</span>
+                </button>
+            </form>
+
+            <p class="form-footnote">
+                Після виходу ваша поточна сесія буде завершена.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

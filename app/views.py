@@ -65,12 +65,3 @@ def contacts():
         profile=PROFILE,
         submitted=submitted
     )
-
-@app.route("/homepage")
-def home():
-    agent = request.user_agent
-    return render_template(
-        "homepage.html",
-        title="Головна сторінка",
-        agent=agent
-    )

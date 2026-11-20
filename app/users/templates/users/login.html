@@ -1,0 +1,99 @@
+
+{% extends "base.html" %}
+
+{% block title %}Вхід | Портфоліо{% endblock %}
+
+{% block content %}
+
+<section class="auth-page">
+
+    <div class="auth-heading">
+        <p class="eyebrow">
+            <span class="status-dot"></span>
+            ОСОБИСТИЙ ПРОСТІР · АВТОРИЗАЦІЯ
+        </p>
+
+        <h1>
+            Рада вас<br>
+            <span class="headline-accent">бачити.</span>
+        </h1>
+
+        <p class="intro-copy">
+            Увійдіть до свого облікового запису,
+            щоб отримати доступ до особистого профілю.
+        </p>
+    </div>
+
+    <div class="auth-grid">
+
+        <div class="auth-info">
+            <span class="mono muted">01 / ВАШ ОБЛІКОВИЙ ЗАПИС</span>
+
+            <div class="auth-decoration">
+                SIGN<br>
+                <span>IN</span><span class="mint">.</span>
+            </div>
+
+            <p class="body-copy">
+                Приємно знову вас бачити.
+                Введіть свої облікові дані, щоб продовжити.
+            </p>
+
+            <div class="auth-note">
+                <span class="status-dot"></span>
+                Захищений доступ через Flask Session
+            </div>
+        </div>
+
+        <div class="auth-panel">
+
+            <div class="form-intro">
+                <span class="mono">02 / ФОРМА ВХОДУ</span>
+                <span class="required-note">* обов'язково</span>
+            </div>
+
+            <form method="POST" action="{{ url_for('users.login') }}">
+
+                <label for="username" class="form-label-custom">
+                    Ім'я користувача <span>*</span>
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control custom-input"
+                    id="username"
+                    name="username"
+                    placeholder="Введіть username"
+                    autocomplete="username"
+                    required
+                >
+
+                <label for="password" class="form-label-custom">
+                    Пароль <span>*</span>
+                </label>
+
+                <input
+                    type="password"
+                    class="form-control custom-input"
+                    id="password"
+                    name="password"
+                    placeholder="Введіть пароль"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button type="submit" class="submit-button">
+                    Увійти в систему <span>↗</span>
+                </button>
+
+                <p class="form-footnote">
+                    Демонстраційна авторизація · без бази даних
+                </p>
+
+            </form>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

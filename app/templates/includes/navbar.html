@@ -1,11 +1,54 @@
 <header class="site-header">
   <nav class="container nav-wrap" aria-label="Головна навігація">
-    <a class="brand-mark" href="{{ url_for('resume') }}" aria-label="На сторінку резюме">
-      <span class="brand-symbol">m.</span><span class="brand-name">портфоліо<span class="brand-dot">/</span></span>
+
+    <a class="brand-mark"
+       href="{{ url_for('resume') }}"
+       aria-label="На головну сторінку">
+      <span class="brand-symbol">m.</span>
+      <span class="brand-name">портфоліо<span class="brand-dot">/</span></span>
     </a>
+
     <div class="nav-links">
-      <a class="nav-link-custom {% if request.endpoint == 'resume' %}active{% endif %}" href="{{ url_for('resume') }}">Резюме <span>01</span></a>
-      <a class="nav-link-custom {% if request.endpoint == 'contacts' %}active{% endif %}" href="{{ url_for('contacts') }}">Контакти <span>02</span></a>
+
+      <a class="nav-link-custom {% if request.endpoint == 'home' %}active{% endif %}"
+         href="{{ url_for('resume') }}">
+        Головна <span>00</span>
+      </a>
+
+      <a class="nav-link-custom {% if request.endpoint == 'resume' %}active{% endif %}"
+         href="{{ url_for('resume') }}">
+        Резюме <span>01</span>
+      </a>
+
+      <a class="nav-link-custom {% if request.endpoint == 'contacts' %}active{% endif %}"
+         href="{{ url_for('contacts') }}">
+        Контакти <span>02</span>
+      </a>
+
+      {% if session.get('username') %}
+
+        <a class="nav-link-custom {% if request.endpoint == 'users.profile' %}active{% endif %}"
+           href="{{ url_for('users.profile') }}">
+          Профіль <span>03</span>
+        </a>
+
+        <form method="POST"
+              action="{{ url_for('users.logout') }}"
+              class="d-inline">
+          <button type="submit" class="nav-link-custom nav-logout">
+            Вийти <span>04</span>
+          </button>
+        </form>
+
+      {% else %}
+
+        <a class="nav-link-custom {% if request.endpoint == 'users.login' %}active{% endif %}"
+           href="{{ url_for('users.login') }}">
+          Вхід <span>03</span>
+        </a>
+
+      {% endif %}
+
     </div>
   </nav>
 </header>
