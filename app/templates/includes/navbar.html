@@ -9,10 +9,9 @@
     </a>
 
     <div class="nav-links">
-
-      <a class="nav-link-custom {% if request.endpoint == 'home' %}active{% endif %}"
-         href="{{ url_for('resume') }}">
-        Головна <span>00</span>
+      <a class="nav-link-custom {% if request.path == '/' %}active{% endif %}"
+        href="/">
+          Головна <span>00</span>
       </a>
 
       <a class="nav-link-custom {% if request.endpoint == 'resume' %}active{% endif %}"
@@ -48,7 +47,7 @@
         </a>
 
       {% endif %}
-      
+
       <div class="nav-theme-switcher">
         <form method="POST" action="{{ url_for('users.change_theme') }}">
           <input type="hidden" name="theme" value="light">

@@ -76,10 +76,10 @@ def change_theme():
 
     if theme not in ("dark", "light"):
         flash("Невідома кольорова схема.", "danger")
-        return redirect(request.referrer or url_for("resume"))
+        return redirect(url_for("users.profile"))
 
     response = make_response(
-        redirect(request.referrer or url_for("resume"))
+        redirect(url_for("users.profile"))
     )
 
     response.set_cookie(
