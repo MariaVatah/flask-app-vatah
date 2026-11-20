@@ -1,0 +1,14 @@
+{
+    "products": {
+        "1": {
+            "id": 1,
+            "name": "\u0456\u043a\u043a\u043f\u0456\u0432\u043a\u043f\u043a\u0456\u043f",
+            "content": "\u0456\u043a\u043f\u043f\u0456\u043a\u043f\u0456\u0432\u043a\u043f\u0456\u043a\u043f",
+            "price": "3536",
+            "category": "electronics",
+            "quantity": 56,
+            "image": "uploads/43f0027d954a4eeeb73f955e42ecc6c0.jpg",
+            "created_at": "2026-11-21 00:17:39"
+        }
+    }
+}

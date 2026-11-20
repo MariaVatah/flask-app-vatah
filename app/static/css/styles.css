@@ -842,3 +842,132 @@ body[data-theme="light"] .nav-theme-button:hover {
         margin-left: 0;
     }
 }
+
+.product-image {
+    width: 240px;
+    height: 180px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.form-panel .product-image {
+    width: 360px;
+    height: 270px;
+    max-width: 100%;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.product {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--border-color, #303a33);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.product:hover {
+    transform: translateY(-4px);
+    border-color: #b5f36b;
+}
+
+.products .product-image {
+    display: block;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 6px;
+    margin-bottom: 18px;
+}
+
+.product h3 {
+    font-size: 22px;
+    margin: 0 0 12px;
+}
+
+.product p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.product a {
+    display: inline-block;
+    margin-top: 12px;
+    color: #b5f36b;
+    text-decoration: none;
+}
+
+.product a:hover {
+    text-decoration: underline;
+}
+
+.product-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.product-actions form {
+    margin: 0;
+}
+
+.product-actions .submit-button,
+.product-actions .delete-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 22px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.product-actions .submit-button {
+    border: 1px solid #b5f36b;
+}
+
+.product-actions .delete-button {
+    background: transparent;
+    color: #e58b8b;
+    border: 1px solid rgba(229, 139, 139, 0.45);
+}
+
+.product-actions .delete-button:hover {
+    background: rgba(229, 139, 139, 0.1);
+    border-color: #e58b8b;
+}
+
+.product-actions .text-link {
+    margin: 0;
+    padding: 12px 4px;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .product-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .product-actions .submit-button,
+    .product-actions .delete-button {
+        width: 100%;
+    }
+}

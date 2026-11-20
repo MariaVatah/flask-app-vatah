@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% from "includes/_form_helpers.html" import render_field %}
+
+{% block title %}Редагувати товар{% endblock %}
+
+{% block content %}
+<section class="contact-page">
+
+    <p class="eyebrow">
+        <span class="status-dot"></span> РЕДАГУВАННЯ ТОВАРУ
+    </p>
+
+    <div class="contact-heading-row">
+        <h1>
+            Змінити<br>
+            <span class="headline-accent">товар.</span>
+        </h1>
+        <div class="contact-number mono">03 — EDIT</div>
+    </div>
+
+    <p class="contact-lead">
+        Оновіть інформацію про товар та збережіть зміни.
+    </p>
+
+    <div class="form-panel">
+        <form
+            method="POST"
+            action="{{ url_for('products.edit_product', product_id=product.id) }}"
+            enctype="multipart/form-data"
+        >
+            {{ form.hidden_tag() }}
+
+            <div class="form-intro">
+                <span>01 / ІНФОРМАЦІЯ ПРО ТОВАР</span>
+                <span>* обов'язкові поля</span>
+            </div>
+
+            {{ render_field(form.name, placeholder="Назва товару") }}
+
+            {{ render_field(form.content, placeholder="Опис товару...", rows=5) }}
+
+            {{ render_field(form.price, placeholder="0.00") }}
+
+            {{ render_field(form.category) }}
+
+            {{ render_field(form.quantity, placeholder="0") }}
+
+            <div class="form-group">
+                <label>Поточне зображення</label>
+
+                {% if product.image %}
+                    <img
+                        src="{{ url_for('products.static', filename=product.image) }}"
+                        alt="{{ product.name }}"
+                        class="product-image"
+                    >
+                {% else %}
+                    <p>Зображення не завантажено.</p>
+                {% endif %}
+            </div>
+
+            {{ render_field(form.image) }}
+
+            <p class="form-hint">
+                Якщо не вибирати нове зображення, залишиться попереднє.
+            </p>
+
+            {{ form.submit(class="submit-button", value="Зберегти зміни") }}
+
+        </form>
+    </div>
+
+    <p>
+        <a
+            class="text-link"
+            href="{{ url_for('products.detail_product', product_id=product.id) }}"
+        >
+            ← Повернутися до товару
+        </a>
+    </p>
+
+</section>
+{% endblock %}

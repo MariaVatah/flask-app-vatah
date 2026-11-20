@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% from "includes/_form_helpers.html" import render_field %}
+
+{% block title %}Додати товар{% endblock %}
+
+{% block content %}
+<section class="contact-page">
+    <p class="eyebrow">
+        <span class="status-dot"></span> КАТАЛОГ ТОВАРІВ
+    </p>
+
+    <div class="contact-heading-row">
+        <h1>Новий<br><span class="headline-accent">товар.</span></h1>
+        <div class="contact-number mono">03 — PRODUCTS</div>
+    </div>
+
+    <p class="contact-lead">
+        Заповніть інформацію про товар, щоб додати його до каталогу.
+    </p>
+
+    <div class="form-panel">
+        <form method="POST"
+              action="{{ url_for('products.add_product') }}"
+              enctype="multipart/form-data">
+
+            {{ form.hidden_tag() }}
+
+            <div class="form-intro">
+                <span class="mono">01 / ІНФОРМАЦІЯ ПРО ТОВАР</span>
+                <span class="required-note">* обов’язкові поля</span>
+            </div>
+
+            {{ render_field(form.name, placeholder="Назва товару") }}
+
+            {{ render_field(form.content, placeholder="Опис товару...", rows=5) }}
+
+            {{ render_field(form.price, placeholder="0.00") }}
+
+            {{ render_field(form.category) }}
+
+            {{ render_field(form.quantity, placeholder="0") }}
+
+            {{ render_field(form.image) }}
+
+            {{ form.submit(class="submit-button") }}
+        </form>
+    </div>
+
+    <p>
+        <a class="text-link" href="{{ url_for('products.list_products') }}">
+            ← Повернутися до товарів
+        </a>
+    </p>
+</section>
+{% endblock %}
