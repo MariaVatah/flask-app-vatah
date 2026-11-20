@@ -194,11 +194,6 @@ h1 { margin: 25px 0 12px; font-size: clamp(46px, 6vw, 76px); font-weight: 800; l
     padding: 0;
 }
 
-
-/* =====================================
-   AUTHENTICATION - LOGIN
-===================================== */
-
 .auth-page,
 .profile-page {
     max-width: 1020px;
@@ -272,10 +267,6 @@ h1 { margin: 25px 0 12px; font-size: clamp(46px, 6vw, 76px); font-weight: 800; l
 .auth-panel .submit-button:hover {
     background: #d0ff9a;
 }
-
-/* =====================================
-   PROFILE
-===================================== */
 
 .profile-heading {
     margin-bottom: 40px;
@@ -378,10 +369,6 @@ h1 { margin: 25px 0 12px; font-size: clamp(46px, 6vw, 76px); font-weight: 800; l
     margin-bottom: 10px;
 }
 
-/* =====================================
-   FLASH MESSAGES
-===================================== */
-
 .flash-messages {
     max-width: 1020px;
     margin: 0 auto 28px;
@@ -450,10 +437,6 @@ h1 { margin: 25px 0 12px; font-size: clamp(46px, 6vw, 76px); font-weight: 800; l
     opacity: 1;
 }
 
-/* =====================================
-   RESPONSIVE
-===================================== */
-
 @media (max-width: 767px) {
     .auth-grid,
     .profile-grid {
@@ -479,5 +462,128 @@ h1 { margin: 25px 0 12px; font-size: clamp(46px, 6vw, 76px); font-weight: 800; l
 
     .flash-messages {
         margin-bottom: 20px;
+    }
+}
+
+.cookie-section {
+    margin-top: 35px;
+    padding: clamp(22px, 4vw, 35px);
+    border: 1px solid var(--line);
+    background: var(--panel);
+}
+
+.cookie-section .section-heading {
+    margin-bottom: 25px;
+}
+
+.cookie-form {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    align-items: end;
+}
+
+.cookie-field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.cookie-field label {
+    color: var(--muted);
+    font: 11px var(--mono);
+}
+
+.cookie-field input {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 14px;
+    border: 1px solid var(--line);
+    outline: none;
+    background: var(--bg);
+    color: var(--text);
+    font: 12px var(--sans);
+}
+
+.cookie-field input:focus {
+    border-color: var(--mint);
+}
+
+.cookie-form .submit-button {
+    grid-column: 1 / -1;
+    width: fit-content;
+    cursor: pointer;
+    font-family: var(--sans);
+}
+
+.cookie-delete-form {
+    grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.cookie-delete-form .logout-button {
+    width: auto;
+    margin: 0;
+}
+
+.delete-all-button {
+    padding: 13px 18px;
+    border: 1px solid #80504b;
+    background: transparent;
+    color: #e69b91;
+    font: 600 12px var(--sans);
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.delete-all-button:hover {
+    background: #8b514c22;
+    border-color: #e69b91;
+}
+
+.cookie-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.cookie-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.cookie-table th,
+.cookie-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+.cookie-table th {
+    color: var(--muted);
+    font: 10px var(--mono);
+    text-transform: uppercase;
+}
+
+.cookie-table td {
+    color: var(--text);
+}
+
+.cookie-table tbody tr:hover {
+    background: var(--panel-soft);
+}
+
+@media (max-width: 767px) {
+    .cookie-form,
+    .cookie-delete-form {
+        grid-template-columns: 1fr;
+    }
+
+    .cookie-delete-form .logout-button {
+        width: 100%;
+    }
+
+    .cookie-form .submit-button {
+        width: 100%;
     }
 }

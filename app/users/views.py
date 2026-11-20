@@ -4,10 +4,12 @@ from flask import (
     redirect,
     url_for,
     flash,
-    session
+    session,
+    make_response
 )
 
 from app.users import users_bp
+
 
 USERNAME = "student"
 PASSWORD = "12345"
@@ -35,6 +37,7 @@ def admin():
         )
     )
 
+
 @users_bp.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -43,16 +46,14 @@ def login():
 
         if username == USERNAME and password == PASSWORD:
             session["username"] = username
-
             flash("Ви успішно увійшли в систему!", "success")
-
             return redirect(url_for("users.profile"))
 
         flash("Неправильний логін або пароль!", "danger")
-
         return redirect(url_for("users.login"))
 
     return render_template("users/login.html")
+
 
 @users_bp.route("/profile")
 def profile():
@@ -62,8 +63,90 @@ def profile():
 
     return render_template(
         "users/profile.html",
-        username=session["username"]
+        username=session["username"],
+        cookies=request.cookies
     )
+
+
+@users_bp.route("/cookies/add", methods=["POST"])
+def add_cookie():
+    if "username" not in session:
+        flash("Спочатку увійдіть у систему!", "warning")
+        return redirect(url_for("users.login"))
+
+    key = request.form.get("key", "").strip()
+    value = request.form.get("value", "")
+    days = request.form.get("days", type=int)
+
+    session_cookie = users_bp.name
+
+    if not key or days is None or days <= 0:
+        flash("Вкажіть ключ і коректний термін дії cookie.", "danger")
+        return redirect(url_for("users.profile"))
+
+    if key.lower() == "session":
+        flash("Це зарезервований ключ сесії. Виберіть інший.", "danger")
+        return redirect(url_for("users.profile"))
+
+    response = make_response(redirect(url_for("users.profile")))
+    response.set_cookie(
+        key,
+        value,
+        max_age=days * 24 * 60 * 60,
+        httponly=True,
+        samesite="Lax"
+    )
+
+    flash(f"Cookie «{key}» успішно додано!", "success")
+    return response
+
+
+@users_bp.route("/cookies/delete", methods=["POST"])
+def delete_cookie():
+    if "username" not in session:
+        flash("Спочатку увійдіть у систему!", "warning")
+        return redirect(url_for("users.login"))
+
+    key = request.form.get("key", "").strip()
+
+    if not key:
+        flash("Вкажіть ключ cookie для видалення.", "danger")
+        return redirect(url_for("users.profile"))
+
+    if key not in request.cookies:
+        flash(f"Cookie «{key}» не знайдено.", "warning")
+        return redirect(url_for("users.profile"))
+
+    response = make_response(redirect(url_for("users.profile")))
+    response.delete_cookie(key)
+
+    flash(f"Cookie «{key}» успішно видалено!", "success")
+    return response
+
+
+@users_bp.route("/cookies/delete-all", methods=["POST"])
+def delete_all_cookies():
+    if "username" not in session:
+        flash("Спочатку увійдіть у систему!", "warning")
+        return redirect(url_for("users.login"))
+
+    response = make_response(redirect(url_for("users.profile")))
+    session_cookie_name = "session"
+
+    deleted_count = 0
+
+    for key in request.cookies:
+        if key != session_cookie_name:
+            response.delete_cookie(key)
+            deleted_count += 1
+
+    flash(
+        f"Видалено cookies: {deleted_count}. Сесію авторизації збережено.",
+        "success"
+    )
+
+    return response
+
 
 @users_bp.route("/logout", methods=["POST"])
 def logout():

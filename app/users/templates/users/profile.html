@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block title %}Мій профіль | Портфоліо{% endblock %}
@@ -46,8 +45,8 @@
             </div>
 
             <p class="body-copy">
-                Ваша сесія активна. Ви можете користуватися
-                функціями особистого профілю.
+                Ваша сесія активна. Ви можете керувати
+                cookie-файлами свого браузера.
             </p>
 
         </div>
@@ -70,11 +69,6 @@
                 <span class="mint">ACTIVE</span>
             </div>
 
-            <div class="profile-detail">
-                <span class="mono muted">ACCESS</span>
-                <span>Authorized user</span>
-            </div>
-
             <form method="POST" action="{{ url_for('users.logout') }}">
                 <button type="submit" class="logout-button">
                     Вийти з облікового запису
@@ -82,11 +76,135 @@
                 </button>
             </form>
 
-            <p class="form-footnote">
-                Після виходу ваша поточна сесія буде завершена.
-            </p>
-
         </div>
+
+    </div>
+
+    <div class="cookie-section">
+
+        <div class="section-heading">
+            <span class="section-number">02</span>
+            <h2>Додати Cookie</h2>
+            <span class="heading-rule"></span>
+        </div>
+
+        <form method="POST" action="{{ url_for('users.add_cookie') }}"
+              class="cookie-form">
+
+            <div class="cookie-field">
+                <label for="cookie-key">Ключ cookie</label>
+                <input type="text" id="cookie-key" name="key"
+                       placeholder="Наприклад: theme"
+                       required>
+            </div>
+
+            <div class="cookie-field">
+                <label for="cookie-value">Значення cookie</label>
+                <input type="text" id="cookie-value" name="value"
+                       placeholder="Наприклад: dark"
+                       required>
+            </div>
+
+            <div class="cookie-field">
+                <label for="cookie-days">Термін дії (днів)</label>
+                <input type="number" id="cookie-days" name="days"
+                       min="1" value="7" required>
+            </div>
+
+            <button type="submit" class="submit-button">
+                Додати cookie <span>↗</span>
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="cookie-section">
+
+        <div class="section-heading">
+            <span class="section-number">03</span>
+            <h2>Видалити Cookie</h2>
+            <span class="heading-rule"></span>
+        </div>
+
+        <form method="POST"
+              action="{{ url_for('users.delete_cookie') }}"
+              class="cookie-form cookie-delete-form">
+
+            <div class="cookie-field">
+                <label for="delete-key">Ключ cookie для видалення</label>
+                <input type="text" id="delete-key" name="key"
+                       placeholder="Введіть ключ"
+                       required>
+            </div>
+
+            <button type="submit" class="logout-button">
+                Видалити cookie <span>↗</span>
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="cookie-section">
+
+        <div class="section-heading">
+            <span class="section-number">04</span>
+            <h2>Видалити всі Cookie</h2>
+            <span class="heading-rule"></span>
+        </div>
+
+        <form method="POST"
+              action="{{ url_for('users.delete_all_cookies') }}">
+
+            <button type="submit" class="delete-all-button"
+                    onclick="return confirm('Видалити всі cookie, крім cookie авторизації?')">
+                Видалити всі cookie
+            </button>
+
+        </form>
+
+        <p class="form-footnote">
+            Cookie авторизації зберігається, щоб не завершувати вашу сесію.
+        </p>
+
+    </div>
+
+    <div class="cookie-section">
+
+        <div class="section-heading">
+            <span class="section-number">05</span>
+            <h2>Збережені Cookie</h2>
+            <span class="heading-rule"></span>
+        </div>
+
+        {% if cookies %}
+
+        <div class="cookie-table-wrapper">
+            <table class="cookie-table">
+                <thead>
+                    <tr>
+                        <th>Ключ</th>
+                        <th>Значення</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for key, value in cookies.items() %}
+                    <tr>
+                        <td class="mono">{{ key }}</td>
+                        <td>{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+
+        <p class="body-copy">Збережених cookie поки немає.</p>
+
+        {% endif %}
 
     </div>
 
