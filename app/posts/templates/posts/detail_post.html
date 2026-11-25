@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <article class="card">
+        <div class="card-body">
+            <h1 class="card-title">{{ post.title }}</h1>
+
+            <p class="text-muted">
+                Категорія: {{ post.category.value }} |
+                Автор: {{ post.author }} |
+                Дата: {{ post.posted.strftime('%d.%m.%Y %H:%M') }}
+            </p>
+
+            <hr>
+
+            <div class="post-content">
+                {{ post.content }}
+            </div>
+
+            <div class="mt-4 d-flex gap-2 flex-wrap">
+                <a href="{{ url_for('posts.update_post', id=post.id) }}"
+                class="btn btn-primary">
+                    Редагувати
+                </a>
+
+                <a href="{{ url_for('posts.delete_post', id=post.id) }}"
+                class="btn btn-danger">
+                    Видалити
+                </a>
+
+                <a href="{{ url_for('posts.all_posts') }}"
+                class="btn btn-secondary">
+                    Назад до списку
+                </a>
+            </div>
+        </div>
+    </article>
+</div>
+{% endblock %}

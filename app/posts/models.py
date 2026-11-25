@@ -19,7 +19,12 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     posted = db.Column(db.DateTime, default=datetime.utcnow)
     category = db.Column(
-        db.Enum(PostCategory),
+        db.Enum(
+            PostCategory,
+            values_callable=lambda enum_cls: [
+                member.value for member in enum_cls
+            ]
+        ),
         nullable=False,
         default=PostCategory.OTHER
     )

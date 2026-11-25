@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from "includes/_form_helpers.html" import render_field %}
+
+{% block title %}Створити пост{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1>Створити новий пост</h1>
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        {{ render_field(form.title) }}
+        {{ render_field(form.content, rows=5) }}
+        {{ render_field(form.enabled) }}
+        {{ render_field(form.publish_date) }}
+        {{ render_field(form.category) }}
+
+        {{ form.submit(class="btn btn-primary mt-3") }}
+    </form>
+</div>
+{% endblock %}
