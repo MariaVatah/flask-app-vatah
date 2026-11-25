@@ -12,8 +12,22 @@ from wtforms.validators import (
     DataRequired,
     InputRequired,
     Length,
-    NumberRange
+    NumberRange,
+    ValidationError
 )
+
+
+def validate_price_precision(form, field):
+    raw_value = (field.raw_data or [""])[0].strip()
+
+    if "." in raw_value:
+        decimal_part = raw_value.rsplit(".", 1)[1]
+
+        if len(decimal_part) > 2:
+            raise ValidationError(
+                "Ціна може містити не більше двох знаків після коми."
+            )
+
 
 class ProductForm(FlaskForm):
     name = StringField(
@@ -42,7 +56,8 @@ class ProductForm(FlaskForm):
             NumberRange(
                 min=0.01,
                 message="Ціна повинна бути більшою за нуль."
-            )
+            ),
+            validate_price_precision
         ]
     )
 

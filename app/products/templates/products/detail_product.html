@@ -1,5 +1,4 @@
-
-{% extends "base.html" %}
+ {% extends "base.html" %}
 
 {% block title %}{{ product.name }}{% endblock %}
 
@@ -21,8 +20,11 @@
                         src="{{ url_for('products.static', filename=product.image) }}"
                         alt="{{ product.name }}"
                         class="product-image"
-                        onerror="this.style.display='none'"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
                     >
+                    <div class="product-no-image" style="display: none;">
+                        Зображення відсутнє
+                    </div>
                 {% else %}
                     <div class="product-no-image">
                         Зображення відсутнє

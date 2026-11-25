@@ -1,3 +1,4 @@
+
 import os
 from tinydb import TinyDB, Query
 
@@ -11,6 +12,8 @@ os.makedirs(DATA_DIR, exist_ok=True)
 DATABASE_PATH = os.path.join(DATA_DIR, "products.json")
 
 db = TinyDB(DATABASE_PATH, indent=4)
+
 products_table = db.table("products")
+metadata_table = db.table("metadata")
 
 ProductQuery = Query()

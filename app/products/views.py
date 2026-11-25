@@ -10,7 +10,7 @@ from flask import (
 )
 
 from app.products import products_bp
-from app.products.database import products_table
+from app.products.database import products_table, metadata_table, ProductQuery
 from app.products.forms import ProductForm
 from app.products.utils import save_product_image
 
@@ -32,11 +32,24 @@ def add_product():
         try:
             image_path = save_product_image(form.image.data)
 
-            existing_products = products_table.all()
-            next_id = max(
-                (product["id"] for product in existing_products),
-                default=0
-            ) + 1
+            counter = metadata_table.get(ProductQuery.key == "last_product_id")
+
+            if counter is None:
+                existing_products = products_table.all()
+                next_id = max(
+                    (product["id"] for product in existing_products),
+                    default=0
+                ) + 1
+                metadata_table.insert({
+                    "key": "last_product_id",
+                    "value": next_id
+                })
+            else:
+                next_id = counter["value"] + 1
+                metadata_table.update(
+                    {"value": next_id},
+                    ProductQuery.key == "last_product_id"
+                )
 
             product = {
                 "id": next_id,

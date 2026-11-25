@@ -1,4 +1,3 @@
-
 import pytest
 from tinydb import TinyDB
 
@@ -19,19 +18,21 @@ VALID_PRODUCT = {
 def client(tmp_path, monkeypatch):
     db = TinyDB(str(tmp_path / "test_products.json"))
     table = db.table("products")
+    metadata = db.table("metadata")
 
     monkeypatch.setattr(product_views, "products_table", table)
+    monkeypatch.setattr(product_views, "metadata_table", metadata)
     monkeypatch.setitem(flask_app.config, "TESTING", True)
     monkeypatch.setitem(flask_app.config, "WTF_CSRF_ENABLED", False)
     monkeypatch.setitem(flask_app.config, "SECRET_KEY", "test-secret")
 
-    yield flask_app.test_client(), table
+    yield flask_app.test_client(), table, metadata
 
     db.close()
 
 
 def test_products_list_page(client):
-    test_client, table = client
+    test_client, table, metadata = client
 
     response = test_client.get("/product")
 
@@ -39,7 +40,7 @@ def test_products_list_page(client):
 
 
 def test_add_product_page(client):
-    test_client, table = client
+    test_client, table, metadata = client
 
     response = test_client.get("/product/add")
 
@@ -47,7 +48,7 @@ def test_add_product_page(client):
 
 
 def test_add_product(client):
-    test_client, table = client
+    test_client, table, metadata = client
 
     response = test_client.post("/product/add", data=VALID_PRODUCT)
 
@@ -62,7 +63,7 @@ def test_add_product(client):
 
 
 def test_add_product_invalid_data(client):
-    test_client, table = client
+    test_client, table, metadata = client
 
     invalid_data = VALID_PRODUCT.copy()
     invalid_data["name"] = "AB"
@@ -75,7 +76,7 @@ def test_add_product_invalid_data(client):
 
 
 def test_product_detail(client):
-    test_client, table = client
+    test_client, table, metadata = client
 
     test_client.post("/product/add", data=VALID_PRODUCT)
 
@@ -86,7 +87,7 @@ def test_product_detail(client):
 
 
 def test_product_detail_not_found(client):
-    test_client, table = client
+    test_client, table, metadata = client
 
     response = test_client.get("/product/999")
 
@@ -94,7 +95,7 @@ def test_product_detail_not_found(client):
 
 
 def test_edit_product(client):
-    test_client, table = client
+    test_client, table, metadata = client
 
     test_client.post("/product/add", data=VALID_PRODUCT)
 
@@ -121,7 +122,7 @@ def test_edit_product(client):
 
 
 def test_edit_product_page(client):
-    test_client, table = client
+    test_client, table, metadata = client
 
     test_client.post("/product/add", data=VALID_PRODUCT)
 
@@ -132,7 +133,7 @@ def test_edit_product_page(client):
 
 
 def test_delete_product(client):
-    test_client, table = client
+    test_client, table, metadata = client
 
     test_client.post("/product/add", data=VALID_PRODUCT)
 
@@ -143,7 +144,7 @@ def test_delete_product(client):
 
 
 def test_delete_product_not_found(client):
-    test_client, table = client
+    test_client, table, metadata = client
 
     response = test_client.post("/product/999/delete")
 
