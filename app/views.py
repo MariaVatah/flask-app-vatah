@@ -1,11 +1,15 @@
+
 import logging
 import os
 
 from flask import render_template, flash, redirect, url_for
-from . import app
 from .forms import ContactForm
 
-CONTACT_LOG = os.path.join(app.root_path, "contacts.log")
+
+CONTACT_LOG = os.path.join(
+    os.path.dirname(__file__),
+    "contacts.log"
+)
 
 contact_logger = logging.getLogger("contact_form")
 contact_logger.setLevel(logging.INFO)
@@ -19,6 +23,7 @@ if not contact_logger.handlers:
         logging.Formatter("%(asctime)s - %(message)s")
     )
     contact_logger.addHandler(file_handler)
+
 
 PROFILE = {
     "name": "Марія Ватах",
@@ -59,8 +64,6 @@ PROFILE = {
 }
 
 
-
-@app.route("/")
 def homepage():
     return render_template(
         "homepage.html",
@@ -69,7 +72,6 @@ def homepage():
     )
 
 
-@app.route("/resume")
 def resume():
     return render_template(
         "resume.html",
@@ -78,8 +80,6 @@ def resume():
     )
 
 
-
-@app.route("/contacts", methods=["GET", "POST"])
 def contacts():
     form = ContactForm()
 
