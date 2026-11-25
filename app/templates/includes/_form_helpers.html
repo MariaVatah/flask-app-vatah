@@ -1,4 +1,4 @@
-{% macro render_field(field, class_name="form-control custom-input", placeholder="", rows=None) %}
+{% macro render_field(field, class_name="form-control custom-input", placeholder="", rows=None, cols=None) %}
 <div class="form-field">
     {{ field.label(class="form-label-custom") }}
 
@@ -6,7 +6,8 @@
         {{ field(
             class=class_name,
             placeholder=placeholder,
-            rows=rows
+            rows=rows,
+            cols=cols
         ) }}
     {% else %}
         {{ field(
