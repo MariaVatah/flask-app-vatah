@@ -1,40 +1,76 @@
+
 {% extends "base.html" %}
 
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
-<section class="contact-page">
+<section class="contact-page product-page">
+
     <p class="eyebrow">
-        <span class="status-dot"></span> ДЕТАЛЬНА ІНФОРМАЦІЯ
+        <span class="status-dot"></span>
+        КАТАЛОГ / ДЕТАЛІ ТОВАРУ
     </p>
 
-    <div class="contact-heading-row">
-        <h1>
-            {{ product.name }}<br>
-            <span class="headline-accent">товар.</span>
-        </h1>
-        <div class="contact-number mono">03 — PRODUCT</div>
-    </div>
+    <div class="product-detail-panel">
 
-    <div class="form-panel">
-        {% if product.image %}
-            <img
-                src="{{ url_for('products.static', filename=product.image) }}"
-                alt="{{ product.name }}"
-                class="product-image"
-                onerror="this.style.display='none'"
-            >
-        {% endif %}
+        <div class="product-detail-layout">
 
-        <p><strong>Опис:</strong> {{ product.content }}</p>
-        <p><strong>Категорія:</strong> {{ product.category }}</p>
-        <p><strong>Ціна:</strong> {{ "%.2f"|format(product.price|float) }} грн</p>
-        <p><strong>Кількість:</strong> {{ product.quantity }}</p>
-        <p><strong>Дата додавання:</strong> {{ product.created_at }}</p>
-        <p><strong>ID товару:</strong> {{ product.id }}</p>
+            <div class="product-detail-image">
+                {% if product.image %}
+                    <img
+                        src="{{ url_for('products.static', filename=product.image) }}"
+                        alt="{{ product.name }}"
+                        class="product-image"
+                        onerror="this.style.display='none'"
+                    >
+                {% else %}
+                    <div class="product-no-image">
+                        Зображення відсутнє
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="product-detail-info">
+
+                <div class="product-category">
+                    {{ product.category }}
+                </div>
+
+                <h1 class="product-detail-title">
+                    {{ product.name }}
+                </h1>
+
+                <p class="product-description">
+                    {{ product.content }}
+                </p>
+
+                <div class="product-price">
+                    {{ "%.2f"|format(product.price|float) }} грн
+                </div>
+
+                <div class="product-stock">
+                    <span class="status-dot"></span>
+                    Є в наявності — {{ product.quantity }} шт.
+                </div>
+
+                <div class="product-meta">
+                    <div>
+                        <span>Дата додавання</span>
+                        <strong>{{ product.created_at }}</strong>
+                    </div>
+
+                    <div>
+                        <span>ID товару</span>
+                        <strong>#{{ product.id }}</strong>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <div class="product-actions">
+
         <a
             class="submit-button"
             href="{{ url_for('products.edit_product', product_id=product.id) }}"
@@ -48,7 +84,7 @@
             onsubmit="return confirm('Ви впевнені, що хочете видалити цей товар?');"
         >
             <button type="submit" class="delete-button">
-                Видалити товар ✕
+                Видалити ✕
             </button>
         </form>
 
@@ -58,6 +94,8 @@
         >
             ← Повернутися до каталогу
         </a>
+
     </div>
+
 </section>
 {% endblock %}
