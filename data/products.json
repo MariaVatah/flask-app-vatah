@@ -2,13 +2,19 @@
     "products": {
         "1": {
             "id": 1,
-            "name": "\u0456\u043a\u043a\u043f\u0456\u0432\u043a\u043f\u043a\u0456\u043f",
-            "content": "\u0456\u043a\u043f\u043f\u0456\u043a\u043f\u0456\u0432\u043a\u043f\u0456\u043a\u043f",
-            "price": "3536",
-            "category": "electronics",
-            "quantity": 56,
-            "image": "uploads/43f0027d954a4eeeb73f955e42ecc6c0.jpg",
-            "created_at": "2026-11-21 00:17:39"
+            "name": "\u041d\u043e\u0443\u0442\u0431\u0443\u043a Lenovo IdeaPad Slim 3",
+            "content": "Lenovo IdeaPad Slim 3 15IRH10 \u2014 \u0446\u0435 \u0441\u0443\u0447\u0430\u0441\u043d\u0438\u0439 \u043d\u043e\u0443\u0442\u0431\u0443\u043a, \u044f\u043a\u0438\u0439 \u043f\u043e\u0454\u0434\u043d\u0443\u0454 \u0441\u0442\u0438\u043b\u044c\u043d\u0438\u0439 \u0434\u0438\u0437\u0430\u0439\u043d, \u0432\u0438\u0441\u043e\u043a\u0443 \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0438\u0432\u043d\u0456\u0441\u0442\u044c \u0456 \u043f\u043e\u0440\u0442\u0430\u0442\u0438\u0432\u043d\u0456\u0441\u0442\u044c...",
+            "price": "37999.00",
+            "category": "computers",
+            "quantity": 17,
+            "image": "uploads/6a29963b71b740b69979133e5defa6ae.jpg",
+            "created_at": "2026-11-25 20:32:59"
+        }
+    },
+    "metadata": {
+        "1": {
+            "key": "last_product_id",
+            "value": 1
         }
     }
 }
