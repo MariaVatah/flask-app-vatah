@@ -34,10 +34,13 @@ def create_app(config_name="development"):
 
     from app.users import users_bp
     from app.products import products_bp
+    from app.posts import posts_bp
 
     app.register_blueprint(users_bp)
     app.register_blueprint(products_bp)
+    app.register_blueprint(posts_bp)
 
+    from app.posts import models
     from app import views
 
     app.add_url_rule(
