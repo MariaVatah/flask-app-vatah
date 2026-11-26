@@ -24,11 +24,24 @@
             <h1 class="post-detail-title">{{ post.title }}</h1>
 
             <div class="post-detail-meta">
-                <span>Автор: {{ post.author }}</span>
+                <span>
+                    Автор: {{ post.user.username if post.user else "Невідомий" }}
+                </span>
                 <span>
                     {{ post.posted.strftime('%d.%m.%Y о %H:%M') }}
                 </span>
             </div>
+            {% if post.tags %}
+                <div class="post-tags">
+                    <span class="post-tags-label">Теги:</span>
+
+                    <div class="post-tags-list">
+                        {% for tag in post.tags %}
+                            <span class="post-tag">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
         </div>
 
         <div class="post-detail-content">

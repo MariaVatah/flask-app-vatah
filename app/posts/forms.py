@@ -5,7 +5,7 @@ from wtforms import (
     BooleanField,
     DateTimeLocalField,
     SelectField,
-    SelectChoice,
+    SelectMultipleField,
     SubmitField
 )
 from wtforms.validators import DataRequired, Length
@@ -41,12 +41,23 @@ class PostForm(FlaskForm):
     category = SelectField(
         "Категорія",
         choices=[
-            SelectChoice("news", "Новини"),
-            SelectChoice("publication", "Публікація"),
-            SelectChoice("tech", "Технології"),
-            SelectChoice("other", "Інше")
+            ("news", "Новини"),
+            ("publication", "Публікація"),
+            ("tech", "Технології"),
+            ("other", "Інше")
         ],
         validators=[DataRequired()]
+    )
+
+    user_id = SelectField(
+        "Автор",
+        coerce=int,
+        validators=[DataRequired()]
+    )
+
+    tags = SelectMultipleField(
+        "Теги",
+        coerce=int
     )
 
     submit = SubmitField("Зберегти")

@@ -4,18 +4,32 @@ from flask import (
     request,
     url_for,
     flash,
-    session
 )
 
 from app import db
 from app.posts import posts_bp
 from app.posts.forms import PostForm
-from app.posts.models import Post, PostCategory
+from app.posts.models import Post, PostCategory, Tag
+from app.users.models import User
 
 
 @posts_bp.route("/create", methods=["GET", "POST"])
 def create_post():
     form = PostForm()
+
+    form.user_id.choices = [
+        (user.id, user.username)
+        for user in db.session.scalars(
+            db.select(User).order_by(User.username)
+        ).all()
+    ]
+
+    form.tags.choices = [
+        (tag.id, tag.name)
+        for tag in db.session.scalars(
+            db.select(Tag).order_by(Tag.name)
+        ).all()
+    ]
 
     if form.validate_on_submit():
         post = Post(
@@ -24,8 +38,12 @@ def create_post():
             is_active=form.enabled.data,
             posted=form.publish_date.data,
             category=PostCategory(form.category.data),
-            author=session.get("username", "Anonymous")
+            user_id=form.user_id.data
         )
+
+        post.tags = db.session.scalars(
+            db.select(Tag).where(Tag.id.in_(form.tags.data))
+        ).all()
 
         db.session.add(post)
         db.session.commit()
@@ -39,6 +57,7 @@ def create_post():
         form=form
     )
 
+
 @posts_bp.route("", methods=["GET"])
 def all_posts():
     stmt = (
@@ -50,15 +69,38 @@ def all_posts():
 
     return render_template("posts/posts.html", posts=posts)
 
+
 @posts_bp.route("/<int:id>", methods=["GET"])
 def post_detail(id):
     post = db.get_or_404(Post, id)
     return render_template("posts/detail_post.html", post=post)
 
+
 @posts_bp.route("/<int:id>/update", methods=["GET", "POST"])
 def update_post(id):
     post = db.get_or_404(Post, id)
     form = PostForm(obj=post)
+
+    form.user_id.choices = [
+        (user.id, user.username)
+        for user in db.session.scalars(
+            db.select(User).order_by(User.username)
+        ).all()
+    ]
+
+    form.tags.choices = [
+        (tag.id, tag.name)
+        for tag in db.session.scalars(
+            db.select(Tag).order_by(Tag.name)
+        ).all()
+    ]
+
+    if not form.is_submitted():
+        form.user_id.data = post.user_id
+        form.tags.data = [tag.id for tag in post.tags]
+        form.enabled.data = post.is_active
+        form.publish_date.data = post.posted
+        form.category.data = post.category.value
 
     if form.validate_on_submit():
         post.title = form.title.data
@@ -66,18 +108,19 @@ def update_post(id):
         post.is_active = form.enabled.data
         post.posted = form.publish_date.data
         post.category = PostCategory(form.category.data)
+        post.user_id = form.user_id.data
+
+        post.tags = db.session.scalars(
+            db.select(Tag).where(Tag.id.in_(form.tags.data))
+        ).all()
 
         db.session.commit()
 
         flash("Post updated successfully", "success")
         return redirect(url_for("posts.post_detail", id=post.id))
 
-    if not form.is_submitted():
-        form.enabled.data = post.is_active
-        form.publish_date.data = post.posted
-        form.category.data = post.category.value
-
     return render_template("posts/add_post.html", form=form)
+
 
 @posts_bp.route("/<int:id>/delete", methods=["GET", "POST"])
 def delete_post(id):

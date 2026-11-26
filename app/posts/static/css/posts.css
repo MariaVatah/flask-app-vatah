@@ -515,3 +515,43 @@ body[data-theme="light"] .post-form-panel select {
         width: 100%;
     }
 }
+
+/* Post tags */
+
+.post-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+}
+
+.post-tags-label {
+    color: var(--muted);
+    font: 11px var(--mono);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+.post-tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.post-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 12px;
+    border: 1px solid rgba(184, 243, 107, .35);
+    background: rgba(184, 243, 107, .07);
+    color: var(--mint);
+    font: 11px var(--mono);
+    transition: .2s ease;
+}
+
+.post-tag:hover {
+    border-color: var(--mint);
+    background: rgba(184, 243, 107, .14);
+}
