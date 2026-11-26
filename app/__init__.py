@@ -41,6 +41,7 @@ def create_app(config_name="development"):
     app.register_blueprint(posts_bp)
 
     from app.posts import models
+    from app.products import models as product_models
     from app import views
 
     app.add_url_rule(
