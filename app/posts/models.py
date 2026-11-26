@@ -1,5 +1,10 @@
+
 from datetime import datetime, timezone
 from enum import Enum
+
+from sqlalchemy import Boolean, DateTime, Enum as SQLAlchemyEnum
+from sqlalchemy import Integer, String, Text
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app import db
 
@@ -14,15 +19,17 @@ class PostCategory(Enum):
 class Post(db.Model):
     __tablename__ = "posts"
 
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    posted = db.Column(
-        db.DateTime,
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+
+    posted: Mapped[datetime | None] = mapped_column(
+        DateTime,
         default=lambda: datetime.now(timezone.utc).replace(tzinfo=None)
     )
-    category = db.Column(
-        db.Enum(
+
+    category: Mapped[PostCategory] = mapped_column(
+        SQLAlchemyEnum(
             PostCategory,
             values_callable=lambda enum_cls: [
                 member.value for member in enum_cls
@@ -32,13 +39,13 @@ class Post(db.Model):
         default=PostCategory.OTHER
     )
 
-    is_active = db.Column(
-        db.Boolean,
+    is_active: Mapped[bool | None] = mapped_column(
+        Boolean,
         default=True
     )
 
-    author = db.Column(
-        db.String(20),
+    author: Mapped[str | None] = mapped_column(
+        String(20),
         default="Anonymous"
     )
 
