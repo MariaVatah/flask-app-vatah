@@ -55,6 +55,7 @@ def create_app(config_name="development"):
     from app.posts import models
     from app.products import models as product_models
     from app import views
+    from app.users import models as user_models
 
     app.add_url_rule(
         "/",
