@@ -37,9 +37,15 @@ class Post(db.Model):
         default=True
     )
 
-    author = db.Column(
-        db.String(20),
-        default="Anonymous"
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
+        nullable=True
+    )
+
+    user = db.relationship(
+        "User",
+        back_populates="posts"
     )
 
     def __repr__(self):
