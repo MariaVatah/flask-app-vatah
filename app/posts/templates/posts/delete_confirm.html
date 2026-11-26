@@ -1,29 +1,45 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('posts.static', filename='css/posts.css') }}">
+{% endblock %}
+
 {% block title %}Видалення поста{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <div class="card">
-        <div class="card-body">
-            <h1>Видалити пост?</h1>
+<section class="posts-page">
 
-            <p>
-                Ви впевнені, що хочете видалити пост
-                <strong>{{ post.title }}</strong>?
-            </p>
+    <div class="post-delete-panel">
 
-            <form method="POST">
-                <button type="submit" class="btn btn-danger">
-                    Так, видалити
-                </button>
+        <div class="post-delete-icon">!</div>
 
-                <a href="{{ url_for('posts.post_detail', id=post.id) }}"
-                   class="btn btn-secondary">
-                    Скасувати
-                </a>
-            </form>
-        </div>
+        <p class="posts-lead">ПІДТВЕРДЖЕННЯ ДІЇ</p>
+
+        <h1>Видалити пост?</h1>
+
+        <p class="post-delete-description">
+            Ви впевнені, що хочете видалити публікацію
+            <strong>«{{ post.title }}»</strong>?
+        </p>
+
+        <p class="post-delete-warning">
+            Цю дію неможливо буде скасувати.
+        </p>
+
+        <form method="POST" class="post-delete-actions">
+
+            <button type="submit" class="post-delete-button">
+                Так, видалити
+            </button>
+
+            <a href="{{ url_for('posts.post_detail', id=post.id) }}"
+               class="post-cancel-link">
+                Ні, повернутися назад
+            </a>
+
+        </form>
+
     </div>
-</div>
+
+</section>
 {% endblock %}

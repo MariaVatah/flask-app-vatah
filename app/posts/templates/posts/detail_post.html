@@ -1,42 +1,53 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('posts.static', filename='css/posts.css') }}">
+{% endblock %}
+
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <article class="card">
-        <div class="card-body">
-            <h1 class="card-title">{{ post.title }}</h1>
+<section class="posts-page">
 
-            <p class="text-muted">
-                Категорія: {{ post.category.value }} |
-                Автор: {{ post.author }} |
-                Дата: {{ post.posted.strftime('%d.%m.%Y %H:%M') }}
-            </p>
+    <article class="post-detail-panel">
 
-            <hr>
+        <a href="{{ url_for('posts.all_posts') }}"
+           class="post-back-link">
+            ← Назад до всіх постів
+        </a>
 
-            <div class="post-content">
-                {{ post.content }}
-            </div>
+        <div class="post-detail-header">
+            <span class="post-category">
+                {{ post.category.value }}
+            </span>
 
-            <div class="mt-4 d-flex gap-2 flex-wrap">
-                <a href="{{ url_for('posts.update_post', id=post.id) }}"
-                class="btn btn-primary">
-                    Редагувати
-                </a>
+            <h1 class="post-detail-title">{{ post.title }}</h1>
 
-                <a href="{{ url_for('posts.delete_post', id=post.id) }}"
-                class="btn btn-danger">
-                    Видалити
-                </a>
-
-                <a href="{{ url_for('posts.all_posts') }}"
-                class="btn btn-secondary">
-                    Назад до списку
-                </a>
+            <div class="post-detail-meta">
+                <span>Автор: {{ post.author }}</span>
+                <span>
+                    {{ post.posted.strftime('%d.%m.%Y о %H:%M') }}
+                </span>
             </div>
         </div>
+
+        <div class="post-detail-content">
+            {{ post.content }}
+        </div>
+
+        <div class="post-detail-actions">
+            <a href="{{ url_for('posts.update_post', id=post.id) }}"
+               class="posts-add-button">
+                Редагувати
+            </a>
+
+            <a href="{{ url_for('posts.delete_post', id=post.id) }}"
+               class="post-delete-button">
+                Видалити
+            </a>
+        </div>
+
     </article>
-</div>
+
+</section>
 {% endblock %}

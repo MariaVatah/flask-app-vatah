@@ -1,22 +1,62 @@
 {% extends "base.html" %}
 {% from "includes/_form_helpers.html" import render_field %}
 
-{% block title %}Створити пост{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('posts.static', filename='css/posts.css') }}">
+{% endblock %}
+
+{% block title %}
+    {% if post %}Редагувати пост{% else %}Створити пост{% endif %}
+{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <h1>Створити новий пост</h1>
+<section class="posts-page">
 
-    <form method="POST">
-        {{ form.hidden_tag() }}
+    <div class="post-form-panel">
 
-        {{ render_field(form.title) }}
-        {{ render_field(form.content, rows=5) }}
-        {{ render_field(form.enabled) }}
-        {{ render_field(form.publish_date) }}
-        {{ render_field(form.category) }}
+        <a href="{{ url_for('posts.all_posts') }}"
+           class="post-back-link">
+            ← Назад до всіх постів
+        </a>
 
-        {{ form.submit(class="btn btn-primary mt-3") }}
-    </form>
-</div>
+        <div class="post-form-heading">
+            <p class="posts-lead">БЛОГ / ПУБЛІКАЦІЇ</p>
+
+            <h1>
+                {% if post %}
+                    Редагувати пост
+                {% else %}
+                    Створити новий пост
+                {% endif %}
+            </h1>
+
+            <p class="posts-description">
+                Заповни поля нижче, щоб
+                {% if post %}оновити{% else %}опублікувати{% endif %}
+                свою публікацію.
+            </p>
+        </div>
+
+        <form method="POST" class="post-form">
+            {{ form.hidden_tag() }}
+
+            {{ render_field(form.title) }}
+            {{ render_field(form.content, rows=7) }}
+            {{ render_field(form.enabled) }}
+            {{ render_field(form.publish_date) }}
+            {{ render_field(form.category) }}
+
+            <div class="post-form-actions">
+                {{ form.submit(class="posts-add-button") }}
+
+                <a href="{{ url_for('posts.all_posts') }}"
+                   class="post-cancel-link">
+                    Скасувати
+                </a>
+            </div>
+        </form>
+
+    </div>
+
+</section>
 {% endblock %}

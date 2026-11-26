@@ -1,36 +1,76 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('posts.static', filename='css/posts.css') }}">
+{% endblock %}
+
 {% block title %}Усі пости{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <h1>Усі пости</h1>
+<section class="posts-page">
 
-    <a href="{{ url_for('posts.create_post') }}"
-       class="btn btn-primary mb-4">
-        Додати пост
-    </a>
+    <div class="posts-heading">
+        <div>
+            <p class="posts-lead">БЛОГ / ПУБЛІКАЦІЇ</p>
+            <h1>Усі пости</h1>
+            <p class="posts-description">
+                Останні публікації, новини та технологічні матеріали.
+            </p>
+        </div>
 
-    {% for post in posts %}
-        <article class="card mb-3">
-            <div class="card-body">
-                <h2 class="card-title">{{ post.title }}</h2>
+        <a href="{{ url_for('posts.create_post') }}"
+           class="posts-add-button">
+            + Додати пост
+        </a>
+    </div>
 
-                <p class="text-muted">
-                    {{ post.category.value }} |
-                    {{ post.posted.strftime('%d.%m.%Y %H:%M') }}
-                </p>
+    {% if posts %}
+        <div class="posts-grid">
+            {% for post in posts %}
+                <article class="post-card">
+                    <img
+                        src="{{ url_for('posts.static', filename='img/default.jpg') }}"
+                        alt="Зображення до публікації"
+                        class="post-card-image"
+                    >
+                    <div class="post-card-body">
+                        <span class="post-category">
+                            {{ post.category.value }}
+                        </span>
 
-                <p>{{ post.content[:100] }}</p>
+                        <h2>{{ post.title }}</h2>
 
-                <a href="{{ url_for('posts.post_detail', id=post.id) }}"
-                   class="btn btn-outline-primary">
-                    Переглянути
-                </a>
-            </div>
-        </article>
+                        <p class="post-card-description">
+                            {{ post.content[:150] }}
+                            {% if post.content|length > 150 %}...{% endif %}
+                        </p>
+
+                        <div class="post-card-meta">
+                            <span>{{ post.author }}</span>
+                            <span>
+                                {{ post.posted.strftime('%d.%m.%Y') }}
+                            </span>
+                        </div>
+
+                        <a href="{{ url_for('posts.post_detail', id=post.id) }}"
+                           class="post-read-more">
+                            Читати повністю →
+                        </a>
+                    </div>
+
+                </article>
+            {% endfor %}
+        </div>
     {% else %}
-        <p>Поки що постів немає.</p>
-    {% endfor %}
-</div>
+        <div class="posts-empty">
+            <h2>Поки що постів немає</h2>
+            <p>Створи першу публікацію, щоб вона з'явилася тут.</p>
+            <a href="{{ url_for('posts.create_post') }}"
+               class="posts-add-button">
+                Створити пост
+            </a>
+        </div>
+    {% endif %}
+
+</section>
 {% endblock %}
